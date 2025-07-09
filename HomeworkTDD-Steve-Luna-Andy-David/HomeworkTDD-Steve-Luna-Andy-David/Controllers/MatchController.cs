@@ -4,7 +4,7 @@ namespace HomeworkTDD_Steve_Luna_Andy_David.Controllers;
 
 public class MatchController
 {
-    public string UpdateMatchScores(MatchEvent homeGoal)
+    public string UpdateMatchScores(int matchId, MatchEvent homeGoal)
     {
         var homeScore = "1";
         var awayScore = "0";    
