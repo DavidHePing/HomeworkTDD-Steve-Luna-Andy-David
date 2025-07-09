@@ -6,6 +6,6 @@ public class MatchController
 {
     public string UpdateMatchScores(MatchEvent homeGoal)
     {
-        throw new NotImplementedException();
+        return "1:0 First Half";
     }
 }
