@@ -10,12 +10,12 @@ namespace TestProject1;
 public class Tests
 {
     private IMatchRepo _matchRepo = null;
-    private int _matchId;
+    const int MatchId = 123;
 
     [SetUp]
     public void Setup()
     {
-        _matchRepo=Substitute.For<IMatchRepo>();
+        _matchRepo = Substitute.For<IMatchRepo>();
     }
 
     [Test]
@@ -23,17 +23,20 @@ public class Tests
     {
         GivenMatchScore("");
         var matchController = new MatchController(_matchRepo);
-        _matchId = 123;
-        var result = matchController.UpdateMatchScores(_matchId,MatchEvent.HomeGoal);
-        
+        var result = matchController.UpdateMatchScores(MatchId, MatchEvent.HomeGoal);
+        _matchRepo.Received(1).UpdateMatchScores(Arg.Is<Match>(x => x.MatchId == MatchId && x.MatchScore.Score == "H"));
         result.Should().Be("1:0 First Half");
     }
 
     private void GivenMatchScore(string score)
     {
-        _matchRepo.GetMatch(_matchId).Returns(new Match
+        _matchRepo.GetMatch(MatchId).Returns(new Match
         {
-            MatchScore = score
+            MatchId = MatchId,
+            MatchScore = new MatchScore
+            {
+                Score = score
+            }
         });
     }
 }
