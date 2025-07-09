@@ -6,7 +6,7 @@ namespace TestProject1;
 
 public class Tests
 {
-    [SetUp]
+    [SetUp] 
     public void Setup()
     {
     }
