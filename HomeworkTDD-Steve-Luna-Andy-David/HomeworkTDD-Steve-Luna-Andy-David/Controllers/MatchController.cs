@@ -6,6 +6,8 @@ public class MatchController
 {
     public string UpdateMatchScores(MatchEvent homeGoal)
     {
-        return "1:0 First Half";
+        var homeScore = "1";
+        var awayScore = "0";    
+        return $"{homeScore}:{awayScore} First Half";
     }
 }
