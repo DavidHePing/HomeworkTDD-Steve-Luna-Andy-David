@@ -1,6 +1,8 @@
 using FluentAssertions;
 using HomeworkTDD_Steve_Luna_Andy_David.Controllers;
 using HomeworkTDD_Steve_Luna_Andy_David.Enums;
+using HomeworkTDD_Steve_Luna_Andy_David.Models;
+using HomeworkTDD_Steve_Luna_Andy_David.Repository;
 using NSubstitute;
 
 namespace TestProject1;
@@ -19,9 +21,8 @@ public class Tests
     [Test]
     public void home_goal_when_0_to_0_at_first_half()
     {
-
         GivenMatchScore("");
-        var matchController = new MatchController();
+        var matchController = new MatchController(_matchRepo);
         _matchId = 123;
         var result = matchController.UpdateMatchScores(_matchId,MatchEvent.HomeGoal);
         
@@ -30,29 +31,9 @@ public class Tests
 
     private void GivenMatchScore(string score)
     {
-        _matchRepo.GetMatch(Arg.Any<int>()).Returns(new Match
+        _matchRepo.GetMatch(_matchId).Returns(new Match
         {
-            MatchId = _matchId,
-            MatchScore = new MatchScore
-            {
-                Score = score
-            }       
+            MatchScore = score
         });
     }
-}
-
-public interface IMatchRepo
-{
-    Match GetMatch(int matchId);
-}
-
-public class Match
-{
-    public int MatchId { get; set; }
-    public MatchScore MatchScore { get; set; }
-}
-
-public class MatchScore
-{
-    public string Score { get; set; }
 }

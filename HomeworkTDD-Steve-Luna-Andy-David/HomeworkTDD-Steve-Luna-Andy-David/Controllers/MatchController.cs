@@ -1,8 +1,9 @@
 ﻿using HomeworkTDD_Steve_Luna_Andy_David.Enums;
+using HomeworkTDD_Steve_Luna_Andy_David.Repository;
 
 namespace HomeworkTDD_Steve_Luna_Andy_David.Controllers;
 
-public class MatchController
+public class MatchController(IMatchRepo matchRepo)
 {
     public string UpdateMatchScores(int matchId, MatchEvent homeGoal)
     {
