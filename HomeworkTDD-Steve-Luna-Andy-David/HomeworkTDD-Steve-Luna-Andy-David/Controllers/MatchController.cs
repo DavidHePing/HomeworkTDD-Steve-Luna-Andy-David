@@ -5,13 +5,21 @@ namespace HomeworkTDD_Steve_Luna_Andy_David.Controllers;
 
 public class MatchController(IMatchRepo matchRepo)
 {
-    public string UpdateMatchScores(int matchId, MatchEvent homeGoal)
+    public string UpdateMatchScores(int matchId, MatchEvent matchEvent)
     {
         var match = matchRepo.GetMatch(matchId);
-        var homeScore = "1";
-        var awayScore = "0";
-        match.MatchScore.Score = "H";
+
+        switch (matchEvent)
+        {
+            case MatchEvent.HomeGoal:
+                match.MatchScore.Score += "H";
+                break;
+            case MatchEvent.AwayGoal:
+                match.MatchScore.Score += "A";
+                break;
+        }
+
         matchRepo.UpdateMatchScores(match);
-        return $"{homeScore}:{awayScore} First Half";
+        return match.MatchScore.GetDisplayResult();
     }
 }

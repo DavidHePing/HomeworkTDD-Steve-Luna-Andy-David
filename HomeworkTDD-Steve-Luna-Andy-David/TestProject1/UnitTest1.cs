@@ -26,7 +26,16 @@ public class Tests
         var matchController = new MatchController(_matchRepo);
         var result = matchController.UpdateMatchScores(MatchId, MatchEvent.HomeGoal);
         ShouldUpdateScore("H");
-        DisplayScoreMustBe(result, "1:0 First Half");
+        DisplayScoreMustBe(result, "1:0 (First Half)");
+    }
+    [Test]
+    public void away_goal_when_0_to_0_at_first_half()
+    {
+        GivenMatchScore("");
+        var matchController = new MatchController(_matchRepo);
+        var result = matchController.UpdateMatchScores(MatchId, MatchEvent.AwayGoal);
+        ShouldUpdateScore("A");
+        DisplayScoreMustBe(result, "0:1 (First Half)");
     }
 
     private static AndConstraint<StringAssertions> DisplayScoreMustBe(string result, string displayScore)
