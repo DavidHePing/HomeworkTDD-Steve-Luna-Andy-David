@@ -22,4 +22,8 @@
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\HomeworkTDD-Steve-Luna-Andy-David\HomeworkTDD-Steve-Luna-Andy-David.csproj" />
+    </ItemGroup>
+
 </Project>
