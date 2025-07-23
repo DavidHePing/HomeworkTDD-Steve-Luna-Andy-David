@@ -11,20 +11,21 @@ namespace TestProject1;
 public class Tests
 {
     private IMatchRepo _matchRepo = null;
+    private MatchController _matchController;
     const int MatchId = 123;
 
     [SetUp]
     public void Setup()
     {
         _matchRepo = Substitute.For<IMatchRepo>();
+        _matchController = new MatchController(_matchRepo);
     }
 
     [Test]
     public void home_goal_when_0_to_0_at_first_half()
     {
         GivenMatchScore("");
-        var matchController = new MatchController(_matchRepo);
-        var result = matchController.UpdateMatchScores(MatchId, MatchEvent.HomeGoal);
+        var result = _matchController.UpdateMatchScores(MatchId, MatchEvent.HomeGoal);
         ShouldUpdateScore("H");
         DisplayScoreMustBe(result, "1:0 (First Half)");
     }
@@ -32,8 +33,7 @@ public class Tests
     public void away_goal_when_0_to_0_at_first_half()
     {
         GivenMatchScore("");
-        var matchController = new MatchController(_matchRepo);
-        var result = matchController.UpdateMatchScores(MatchId, MatchEvent.AwayGoal);
+        var result = _matchController.UpdateMatchScores(MatchId, MatchEvent.AwayGoal);
         ShouldUpdateScore("A");
         DisplayScoreMustBe(result, "0:1 (First Half)");
     }
@@ -42,8 +42,7 @@ public class Tests
     public void next_period_when_0_to_1_at_first_half()
     {
         GivenMatchScore("A");
-        var matchController = new MatchController(_matchRepo);
-        var result = matchController.UpdateMatchScores(MatchId, MatchEvent.NextPeriod);
+        var result = _matchController.UpdateMatchScores(MatchId, MatchEvent.NextPeriod);
         ShouldUpdateScore("A;");
         DisplayScoreMustBe(result, "0:1 (Second Half)");
     }

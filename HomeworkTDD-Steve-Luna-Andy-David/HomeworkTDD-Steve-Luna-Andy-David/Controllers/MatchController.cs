@@ -1,4 +1,5 @@
 ﻿using HomeworkTDD_Steve_Luna_Andy_David.Enums;
+using HomeworkTDD_Steve_Luna_Andy_David.Models;
 using HomeworkTDD_Steve_Luna_Andy_David.Repository;
 
 namespace HomeworkTDD_Steve_Luna_Andy_David.Controllers;
@@ -9,18 +10,7 @@ public class MatchController(IMatchRepo matchRepo)
     {
         var match = matchRepo.GetMatch(matchId);
 
-        switch (matchEvent)
-        {
-            case MatchEvent.HomeGoal:
-                match.MatchScore.Score += "H";
-                break;
-            case MatchEvent.AwayGoal:
-                match.MatchScore.Score += "A";
-                break;
-            case MatchEvent.NextPeriod:
-                match.MatchScore.Score += ";";
-                break;
-        }
+        match.MatchScore.UpdateMatchScore(matchEvent);
 
         matchRepo.UpdateMatchScores(match);
         return match.MatchScore.GetDisplayResult();
