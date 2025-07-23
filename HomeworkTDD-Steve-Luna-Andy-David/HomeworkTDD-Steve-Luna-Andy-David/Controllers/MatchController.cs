@@ -17,6 +17,9 @@ public class MatchController(IMatchRepo matchRepo)
             case MatchEvent.AwayGoal:
                 match.MatchScore.Score += "A";
                 break;
+            case MatchEvent.NextPeriod:
+                match.MatchScore.Score += ";";
+                break;
         }
 
         matchRepo.UpdateMatchScores(match);
