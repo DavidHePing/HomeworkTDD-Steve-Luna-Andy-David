@@ -46,6 +46,15 @@ public class Tests
         ShouldUpdateScore("A;");
         DisplayScoreMustBe(result, "0:1 (Second Half)");
     }
+    
+    [Test]
+    public void home_goal_when_1_to_1_at_second_half()
+    {
+        GivenMatchScore("AH;");
+        var result = _matchController.UpdateMatchScores(MatchId, MatchEvent.HomeGoal);
+        ShouldUpdateScore("AH;H");
+        DisplayScoreMustBe(result, "2:1 (Second Half)");
+    }
 
     private static AndConstraint<StringAssertions> DisplayScoreMustBe(string result, string displayScore)
     {
