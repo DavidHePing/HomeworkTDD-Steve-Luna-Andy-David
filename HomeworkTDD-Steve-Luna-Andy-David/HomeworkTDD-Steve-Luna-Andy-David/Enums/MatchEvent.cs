@@ -6,5 +6,6 @@ public enum MatchEvent
     HomeGoal,
     AwayGoal,
     NextPeriod,
-    CancelHomeGoal
+    CancelHomeGoal,
+    CancelAwayGoal
 }

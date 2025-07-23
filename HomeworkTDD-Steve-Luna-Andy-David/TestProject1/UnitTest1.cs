@@ -66,6 +66,14 @@ public class Tests
         ShouldUpdateScore("A");
         DisplayScoreMustBe(result, "0:1 (First Half)");
     }
+    [Test]
+    public void cancel_away_goal_succeed_when_1_to_1_at_first_half()
+    {
+        GivenMatchScore("HA");
+        var result = _matchController.UpdateMatchScores(MatchId, MatchEvent.CancelAwayGoal);
+        ShouldUpdateScore("H");
+        DisplayScoreMustBe(result, "1:0 (First Half)");
+    }
 
     [Test]
     public void cancel_home_goal_succeed_when_1_to_1_at_second_half()
