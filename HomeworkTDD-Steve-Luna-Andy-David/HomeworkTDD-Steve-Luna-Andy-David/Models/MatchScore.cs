@@ -48,7 +48,15 @@ public class MatchScore
 
     private void CancelHomeGoal()
     {
-        Score = Score[..^1];
+        var hasRemoveSemicolon = false;
+        var adjustedScore = Score;
+        if (Score.Last() == ';')
+        {
+            adjustedScore = adjustedScore.Remove(adjustedScore.Length - 1);
+            hasRemoveSemicolon = true;
+        }
+        adjustedScore = adjustedScore.Remove(adjustedScore.Length - 1);
+        Score = adjustedScore + (hasRemoveSemicolon ? ";" : "");
     }
 
     private void NextPeriod()
