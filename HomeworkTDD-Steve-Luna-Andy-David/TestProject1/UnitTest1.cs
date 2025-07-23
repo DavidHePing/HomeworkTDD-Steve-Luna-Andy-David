@@ -2,6 +2,7 @@ using FluentAssertions;
 using FluentAssertions.Primitives;
 using HomeworkTDD_Steve_Luna_Andy_David.Controllers;
 using HomeworkTDD_Steve_Luna_Andy_David.Enums;
+using HomeworkTDD_Steve_Luna_Andy_David.Exceptions;
 using HomeworkTDD_Steve_Luna_Andy_David.Models;
 using HomeworkTDD_Steve_Luna_Andy_David.Repository;
 using NSubstitute;
@@ -73,6 +74,15 @@ public class Tests
         var result = _matchController.UpdateMatchScores(MatchId, MatchEvent.CancelHomeGoal);
         ShouldUpdateScore("A;");
         DisplayScoreMustBe(result, "0:1 (Second Half)");
+    }
+    [Test]
+    public void cancel_home_goal_fail_when_1_to_2_at_first_half()
+    {
+        GivenMatchScore("AHA");
+        var action = () => _matchController.UpdateMatchScores(MatchId, MatchEvent.CancelHomeGoal);
+        action.Should().Throw<MatchScoreException>()
+            .Where(exception => exception.MatchEvent == MatchEvent.CancelHomeGoal
+                                && exception.MatchScores == "AHA");
     }
 
 
