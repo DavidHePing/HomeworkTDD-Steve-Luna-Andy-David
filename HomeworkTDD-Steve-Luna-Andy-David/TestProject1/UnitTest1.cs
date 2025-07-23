@@ -38,6 +38,16 @@ public class Tests
         DisplayScoreMustBe(result, "0:1 (First Half)");
     }
 
+    [Test]
+    public void next_period_when_0_to_1_at_first_half()
+    {
+        GivenMatchScore("A");
+        var matchController = new MatchController(_matchRepo);
+        var result = matchController.UpdateMatchScores(MatchId, MatchEvent.NextPeriod);
+        ShouldUpdateScore("A;");
+        DisplayScoreMustBe(result, "0:1 (Second Half)");
+    }
+
     private static AndConstraint<StringAssertions> DisplayScoreMustBe(string result, string displayScore)
     {
         return result.Should().Be(displayScore);

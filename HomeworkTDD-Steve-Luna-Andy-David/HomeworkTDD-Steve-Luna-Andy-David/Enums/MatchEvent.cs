@@ -4,5 +4,6 @@ public enum MatchEvent
 {
     None = 0,
     HomeGoal,
-    AwayGoal
+    AwayGoal,
+    NextPeriod
 }
