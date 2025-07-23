@@ -53,27 +53,14 @@ public class MatchScore
 
     private void CancelHomeGoal()
     {
-        var hasRemoveSemicolon = false;
-        var adjustedScore = Score;
-        if (Score.Last() == ';')
-        {
-            adjustedScore = adjustedScore.Remove(adjustedScore.Length - 1);
-            hasRemoveSemicolon = true;
-        }
-        
-        if (!adjustedScore.EndsWith("H"))
-        {
-            throw new MatchScoreException
-                {
-                    MatchEvent = MatchEvent.CancelHomeGoal,
-                    MatchScores = Score
-                };
-        }
-        
-        adjustedScore = adjustedScore.Remove(adjustedScore.Length - 1);
-        Score = adjustedScore + (hasRemoveSemicolon ? ";" : "");
+        CancelGoal("H", MatchEvent.CancelHomeGoal);
     }
     private void CancelAwayGoal()
+    {
+        CancelGoal("A", MatchEvent.CancelAwayGoal);
+    }
+
+    private void CancelGoal(string score, MatchEvent matchEvent)
     {
         var hasRemoveSemicolon = false;
         var adjustedScore = Score;
@@ -83,13 +70,13 @@ public class MatchScore
             hasRemoveSemicolon = true;
         }
         
-        if (!adjustedScore.EndsWith("A"))
+        if (!adjustedScore.EndsWith(score))
         {
             throw new MatchScoreException
-                {
-                    MatchEvent = MatchEvent.CancelAwayGoal,
-                    MatchScores = Score
-                };
+            {
+                MatchEvent = matchEvent,
+                MatchScores = Score
+            };
         }
         
         adjustedScore = adjustedScore.Remove(adjustedScore.Length - 1);
