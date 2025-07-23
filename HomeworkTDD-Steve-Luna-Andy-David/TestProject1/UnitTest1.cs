@@ -84,6 +84,15 @@ public class Tests
             .Where(exception => exception.MatchEvent == MatchEvent.CancelHomeGoal
                                 && exception.MatchScores == "AHA");
     }
+    [Test]
+    public void cancel_home_goal_fail_when_1_to_2_at_second_half()
+    {
+        GivenMatchScore("AHA;");
+        var action = () => _matchController.UpdateMatchScores(MatchId, MatchEvent.CancelHomeGoal);
+        action.Should().Throw<MatchScoreException>()
+            .Where(exception => exception.MatchEvent == MatchEvent.CancelHomeGoal
+                                && exception.MatchScores == "AHA;");
+    }
 
 
     private static AndConstraint<StringAssertions> DisplayScoreMustBe(string result, string displayScore)
