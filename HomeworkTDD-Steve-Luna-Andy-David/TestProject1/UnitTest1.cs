@@ -29,6 +29,7 @@ public class Tests
         ShouldUpdateScore("H");
         DisplayScoreMustBe(result, "1:0 (First Half)");
     }
+
     [Test]
     public void away_goal_when_0_to_0_at_first_half()
     {
@@ -46,7 +47,7 @@ public class Tests
         ShouldUpdateScore("A;");
         DisplayScoreMustBe(result, "0:1 (Second Half)");
     }
-    
+
     [Test]
     public void home_goal_when_1_to_1_at_second_half()
     {
@@ -64,7 +65,17 @@ public class Tests
         ShouldUpdateScore("A");
         DisplayScoreMustBe(result, "0:1 (First Half)");
     }
-    
+
+    [Test]
+    public void cancel_home_goal_succeed_when_1_to_1_at_second_half()
+    {
+        GivenMatchScore("AH;");
+        var result = _matchController.UpdateMatchScores(MatchId, MatchEvent.CancelHomeGoal);
+        ShouldUpdateScore("A;");
+        DisplayScoreMustBe(result, "0:1 (Second Half)");
+    }
+
+
     private static AndConstraint<StringAssertions> DisplayScoreMustBe(string result, string displayScore)
     {
         return result.Should().Be(displayScore);
