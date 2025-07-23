@@ -40,7 +40,15 @@ public class MatchScore
             case MatchEvent.NextPeriod:
                 NextPeriod();
                 break;
+            case MatchEvent.CancelHomeGoal:
+                CancelHomeGoal();
+                break;
         }
+    }
+
+    private void CancelHomeGoal()
+    {
+        Score = Score[..^1];
     }
 
     private void NextPeriod()
