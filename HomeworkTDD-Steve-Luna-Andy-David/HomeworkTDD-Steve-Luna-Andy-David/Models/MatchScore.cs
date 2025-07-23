@@ -1,4 +1,5 @@
 using HomeworkTDD_Steve_Luna_Andy_David.Enums;
+using HomeworkTDD_Steve_Luna_Andy_David.Exceptions;
 
 namespace HomeworkTDD_Steve_Luna_Andy_David.Models;
 
@@ -55,6 +56,16 @@ public class MatchScore
             adjustedScore = adjustedScore.Remove(adjustedScore.Length - 1);
             hasRemoveSemicolon = true;
         }
+        
+        if (!adjustedScore.EndsWith("H"))
+        {
+            throw new MatchScoreException
+                {
+                    MatchEvent = MatchEvent.CancelHomeGoal,
+                    MatchScores = Score
+                };
+        }
+        
         adjustedScore = adjustedScore.Remove(adjustedScore.Length - 1);
         Score = adjustedScore + (hasRemoveSemicolon ? ";" : "");
     }
